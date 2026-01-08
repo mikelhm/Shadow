@@ -1,7 +1,7 @@
 apply plugin: 'kotlin'
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     api "com.android.tools.build:gradle:$build_gradle_version"
     api "com.android.tools:common:$android_build_tools_version"
     api "org.javassist:javassist:$javassist_version"
@@ -12,23 +12,25 @@ dependencies {
 
 compileKotlin {
     kotlinOptions {
-        jvmTarget = "1.6"
+        jvmTarget = "17"
     }
 }
 
 compileTestKotlin {
     kotlinOptions {
-        jvmTarget = "1.6"
+        jvmTarget = "17"
     }
 }
 
 java {
-    sourceCompatibility JavaVersion.VERSION_11
-    targetCompatibility JavaVersion.VERSION_11
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
 }
 
 task testJar(type: Jar, dependsOn: testClasses) {
-    baseName = "test-${project.archivesBaseName}"
+    // 将 baseName 替换为 archiveBaseName
+    archiveBaseName.set("test-${project.name}")
+//    baseName = "test-${project.archivesBaseName}"
     from sourceSets.test.output
 }
 

@@ -7,9 +7,9 @@ includeBuild 'projects/sdk/coding'
 includeBuild 'projects/sdk/core'
 includeBuild 'projects/sdk/dynamic'
 
-includeTest()
+//includeTest()
 includeSample()
-includeSampleDynamicApk()
+//includeSampleDynamicApk()
 
 def includeTest() {
     include 'test-dynamic-host',

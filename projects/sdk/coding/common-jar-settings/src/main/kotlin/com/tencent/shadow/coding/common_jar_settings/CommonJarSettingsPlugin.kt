@@ -14,8 +14,8 @@ class CommonJarSettingsPlugin : Plugin<Project> {
         project.pluginManager.apply("java-library")
         val java = project.extensions.getByType(JavaPluginExtension::class.java)
 
-        java.sourceCompatibility = JavaVersion.VERSION_1_7
-        java.targetCompatibility = JavaVersion.VERSION_1_7
+        java.sourceCompatibility = JavaVersion.VERSION_17
+        java.targetCompatibility = JavaVersion.VERSION_17
 
         val androidJar = project.files(AndroidJar.ANDROID_JAR_PATH)
         // 将android.jar设置为这些jar工程的bootclasspath，以便javac编译时使用的JDK标准库采用android平台的定义

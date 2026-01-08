@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tencent.shadow.sample.plugin.app.lib.base">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
         android:icon="@android:drawable/sym_def_app_icon"
@@ -9,7 +8,8 @@
             android:name="com.tencent.shadow.sample.plugin.app.lib.gallery.splash.SplashActivity"
             android:theme="@style/CustomActivityTheme"
             android:configChanges="orientation|keyboardHidden"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

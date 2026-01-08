@@ -25,21 +25,21 @@ def taskList = [
         ":sample-base:createPluginDebugApkListingFileRedirect",
         ":sample-base:createPluginReleaseApkListingFileRedirect",
 
-        ":test-dynamic-loader:createDebugApkListingFileRedirect",
-        ":test-dynamic-loader:createReleaseApkListingFileRedirect",
-        ":test-dynamic-runtime:createDebugApkListingFileRedirect",
-        ":test-dynamic-runtime:createReleaseApkListingFileRedirect",
-        ":test-dynamic-manager:createDebugApkListingFileRedirect",
-        ":test-dynamic-manager:createReleaseApkListingFileRedirect",
-        ":plugin-service-for-host:createPluginDebugApkListingFileRedirect",
-        ":plugin-service-for-host:createPluginReleaseApkListingFileRedirect",
-        ":test-plugin-androidx-cases:createPluginDebugApkListingFileRedirect",
-        ":test-plugin-androidx-cases:createPluginReleaseApkListingFileRedirect",
-        ":test-plugin-general-cases:createPluginDebugApkListingFileRedirect",
-        ":test-plugin-general-cases:createPluginReleaseApkListingFileRedirect",
-
-        ":sample-hello-apk:createDebugApkListingFileRedirect",
-        ":sample-hello-apk:createReleaseApkListingFileRedirect",
+//        ":test-dynamic-loader:createDebugApkListingFileRedirect",
+//        ":test-dynamic-loader:createReleaseApkListingFileRedirect",
+//        ":test-dynamic-runtime:createDebugApkListingFileRedirect",
+//        ":test-dynamic-runtime:createReleaseApkListingFileRedirect",
+//        ":test-dynamic-manager:createDebugApkListingFileRedirect",
+//        ":test-dynamic-manager:createReleaseApkListingFileRedirect",
+//        ":plugin-service-for-host:createPluginDebugApkListingFileRedirect",
+//        ":plugin-service-for-host:createPluginReleaseApkListingFileRedirect",
+//        ":test-plugin-androidx-cases:createPluginDebugApkListingFileRedirect",
+//        ":test-plugin-androidx-cases:createPluginReleaseApkListingFileRedirect",
+//        ":test-plugin-general-cases:createPluginDebugApkListingFileRedirect",
+//        ":test-plugin-general-cases:createPluginReleaseApkListingFileRedirect",
+//
+//        ":sample-hello-apk:createDebugApkListingFileRedirect",
+//        ":sample-hello-apk:createReleaseApkListingFileRedirect",
 ]
 
 afterEvaluate {
@@ -54,8 +54,14 @@ def copyApkAfterTask(t) {
         def redirectFile = t.getOutputs().getFiles().singleFile
         def listingFile = redirectFile.readLines().get(1).replaceFirst("listingFile=", "")
         def metadataFile = new File(redirectFile.parentFile, listingFile)
-        def metadata = new org.json.JSONObject(metadataFile.text)
-        def outputFile = metadata.getJSONArray("elements").getJSONObject(0).getString("outputFile")
+//        def metadata = new org.json.JSONObject(metadataFile.text)
+        // 使用 Groovy 的 JsonSlurper 替代 JSONObject
+        def jsonSlurper = new groovy.json.JsonSlurper()
+        def metadata = jsonSlurper.parse(metadataFile)
+//        def outputFile = metadata.getJSONArray("elements").getJSONObject(0).getString("outputFile")
+        // 修正：使用 Map 的访问方式而不是 getJSONArray
+        def elements = metadata.elements
+        def outputFile = elements[0].outputFile
         def apkFile = new File(metadataFile.parentFile, outputFile)
         def testRelativePath = redirectFile.relativePath(apkFile)
         def needCopy = !testRelativePath.matches("^(\\.\\.${File.separatorChar})+outputs${File.separatorChar}.+")

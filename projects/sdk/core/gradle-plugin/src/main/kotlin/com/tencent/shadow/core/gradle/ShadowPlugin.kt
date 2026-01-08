@@ -27,7 +27,7 @@ import com.android.build.gradle.api.ApplicationVariant
 import com.android.sdklib.AndroidVersion.VersionCodes
 import com.tencent.shadow.core.gradle.extensions.PackagePluginExtension
 import com.tencent.shadow.core.manifest_parser.generatePluginManifest
-import com.tencent.shadow.core.transform.DeprecatedTransformWrapper
+//import com.tencent.shadow.core.transform.DeprecatedTransformWrapper
 import com.tencent.shadow.core.transform.GradleTransformWrapper
 import com.tencent.shadow.core.transform.ShadowTransform
 import com.tencent.shadow.core.transform_kit.AndroidClassPoolBuilder
@@ -61,14 +61,14 @@ class ShadowPlugin : Plugin<Project> {
                 lateInitBuilder,
                 { shadowExtension.transformConfig.useHostContext }
             )
-            if (agpCompat.hasDeprecatedTransformApi()) {
-                baseExtension.registerTransform(
-                    DeprecatedTransformWrapper(
-                        project,
-                        shadowTransform
-                    )
-                )
-            } else {
+//            if (agpCompat.hasDeprecatedTransformApi()) {
+//                baseExtension.registerTransform(
+//                    DeprecatedTransformWrapper(
+//                        project,
+//                        shadowTransform
+//                    )
+//                )
+//            } else {
                 val androidComponentsExtension =
                     project.extensions.getByName("androidComponents") as ApplicationAndroidComponentsExtension
                 androidComponentsExtension.onVariants(
@@ -92,7 +92,7 @@ class ShadowPlugin : Plugin<Project> {
                             GradleTransformWrapper::output
                         )
                 }
-            }
+//            }
         }
 
         addFlavorForTransform(baseExtension)

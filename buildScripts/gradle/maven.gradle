@@ -85,8 +85,12 @@ def sourceJar(String name, String path) {
         description = "package ${name} source to jar"
         from "$path/src/main/java"
         from "$path/src/main/kotlin"
-        destinationDir = file("$path/build/libs/")
-        classifier = 'sources'
+//        destinationDir = file("$path/build/libs/")
+        // 将 destinationDir 替换为 destinationDirectory
+        destinationDirectory.set(file("$path/build/libs/"))
+//        classifier = 'sources'
+        // 将 classifier 替换为 archiveClassifier
+        archiveClassifier.set('sources')
     }
 }
 
@@ -114,7 +118,7 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 def dependencies = root.appendNode('dependencies')
-                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk7', kotlin_version))
+                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk8', kotlin_version))
                 dependencies.append(getDependencyNode('compile', 'com.googlecode.json-simple', 'json-simple', json_simple_version))
                 dependencies.append(getDependencyNode('compile', coreGroupId, 'transform-kit', publicationVersion))
                 dependencies.append(getDependencyNode('compile', coreGroupId, 'transform', publicationVersion))
@@ -152,7 +156,7 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 def dependencies = root.appendNode('dependencies')
-                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk7', kotlin_version))
+                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk8', kotlin_version))
                 dependencies.append(getDependencyNode('compile', 'com.squareup', 'javapoet', javapoet_version))
                 dependencies.append(getDependencyNode('compile', coreGroupId, 'runtime', publicationVersion))
 
@@ -198,7 +202,7 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 def dependencies = root.appendNode('dependencies')
-                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk7', kotlin_version))
+                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk8', kotlin_version))
                 dependencies.append(getDependencyNode('compile', coreGroupId, 'runtime', publicationVersion))
                 dependencies.append(getDependencyNode('provided', coreGroupId, 'activity-container', publicationVersion))
                 dependencies.append(getDependencyNode('provided', coreGroupId, 'common', publicationVersion))
@@ -265,7 +269,7 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 def dependencies = root.appendNode('dependencies')
-                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk7', kotlin_version))
+                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk8', kotlin_version))
                 dependencies.append(getDependencyNode('compile', 'org.javassist', 'javassist', javassist_version))
 
                 def scm = root.appendNode('scm')
@@ -380,7 +384,7 @@ publishing {
             pom.withXml {
                 def root = asNode()
                 def dependencies = root.appendNode('dependencies')
-                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk7', kotlin_version))
+                dependencies.append(getDependencyNode('compile', 'org.jetbrains.kotlin', 'kotlin-stdlib-jdk8', kotlin_version))
                 dependencies.append(getDependencyNode('compile', coreGroupId, 'loader', publicationVersion))
                 dependencies.append(getDependencyNode('provided', coreGroupId, 'activity-container', publicationVersion))
                 dependencies.append(getDependencyNode('provided', coreGroupId, 'common', publicationVersion))

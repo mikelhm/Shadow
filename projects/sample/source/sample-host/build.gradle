@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace project.SAMPLE_HOST_APP_APPLICATION_ID
     compileSdkVersion project.COMPILE_SDK_VERSION
     defaultConfig {
-        applicationId project.SAMPLE_HOST_APP_APPLICATION_ID
+//        applicationId project.SAMPLE_HOST_APP_APPLICATION_ID
         minSdkVersion project.MIN_SDK_VERSION
         targetSdkVersion project.TARGET_SDK_VERSION
         versionCode project.VERSION_CODE
@@ -37,6 +38,9 @@ android {
     lintOptions {
         checkReleaseBuilds false
         abortOnError false
+    }
+    buildFeatures {
+        buildConfig true
     }
 }
 
@@ -101,5 +105,39 @@ tasks.whenTaskAdded { task ->
     }
     if (task.name == "generateReleaseAssets") {
         generateAssets(task, 'release')
+    }
+}
+
+// 为 Gradle 8.0+ 添加显式依赖声明
+afterEvaluate {
+    // Debug 构建类型的复制任务
+    def copyDebugSampleManagerTask = tasks.findByName('copyDebugSample-managerTask')
+    def copyDebugPluginZipTask = tasks.findByName('copyDebugPlugin-zipTask')
+
+    // Release 构建类型的复制任务
+    def copyReleaseSampleManagerTask = tasks.findByName('copyReleaseSample-managerTask')
+    def copyReleasePluginZipTask = tasks.findByName('copyReleasePlugin-zipTask')
+
+    // 为所有 Lint 相关的任务添加依赖
+    tasks.all { task ->
+        // 检查是否是 Lint 相关任务
+        if (task.name.toLowerCase().contains('lint')) {
+            // 根据构建类型添加相应依赖
+            if (task.name.toLowerCase().contains('debug')) {
+                if (copyDebugSampleManagerTask) {
+                    task.dependsOn(copyDebugSampleManagerTask)
+                }
+                if (copyDebugPluginZipTask) {
+                    task.dependsOn(copyDebugPluginZipTask)
+                }
+            } else if (task.name.toLowerCase().contains('release')) {
+                if (copyReleaseSampleManagerTask) {
+                    task.dependsOn(copyReleaseSampleManagerTask)
+                }
+                if (copyReleasePluginZipTask) {
+                    task.dependsOn(copyReleasePluginZipTask)
+                }
+            }
+        }
     }
 }

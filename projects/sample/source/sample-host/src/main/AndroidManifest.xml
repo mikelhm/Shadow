@@ -10,7 +10,7 @@
         android:theme="@android:style/Theme.DeviceDefault"
         android:usesCleartextTraffic="true"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name="com.tencent.shadow.sample.host.MainActivity">
+        <activity android:name="com.tencent.shadow.sample.host.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -72,7 +72,7 @@
 
             />
         <!--dynamic activity注册 end -->
-        <receiver android:name=".plugin_view.MainProcessManagerReceiver">
+        <receiver android:name=".plugin_view.MainProcessManagerReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="sample_host.manager.startPluginService" />
             </intent-filter>

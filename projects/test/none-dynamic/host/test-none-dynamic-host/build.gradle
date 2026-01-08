@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
+    namespace "com.tencent.shadow.test.none_dynamic.host"
     compileSdkVersion project.COMPILE_SDK_VERSION
     defaultConfig {
         applicationId project.TEST_HOST_APP_APPLICATION_ID
@@ -43,7 +44,7 @@ dependencies {
     implementation "org.slf4j:slf4j-api:$slf4j_version"
 
     implementation 'com.tencent.shadow.core:common'
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     implementation 'com.tencent.shadow.core:loader'
     implementation 'com.tencent.shadow.core:activity-container'
     implementation project(':custom-view')
