@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-feature android:glEsVersion="0x00020000" />
+    <!--通知权限-->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+    <!-- 前台服务权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
 
     <application
         android:name="com.tencent.shadow.sample.plugin.app.lib.UseCaseApplication"
@@ -46,6 +51,9 @@
 
         <activity android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.packagemanager.TestPackageManagerActivity" />
 
+        <activity
+            android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestForegroundService" />
+
         <receiver android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.MyReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="com.tencent.test.action" />
@@ -68,6 +76,10 @@
             android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.provider.TestProvider" />
 
         <service android:name=".usecases.service.HostAddPluginViewService" />
+        <service android:name=".usecases.service.PluginForegrounService" android:exported="true"
+            android:foregroundServiceType="specialUse">
+
+        </service>
     </application>
 
 </manifest>

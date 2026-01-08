@@ -60,6 +60,9 @@
         <activity
             android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.packagemanager.TestPackageManagerActivity" />
 
+        <activity
+            android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestForegroundService" />
+
         <receiver
             android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.MyReceiver">
 

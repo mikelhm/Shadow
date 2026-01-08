@@ -18,7 +18,7 @@
 
         <activity android:name=".lib.usecases.activity.TestActivityReCreate" />
 
-        <activity android:name=".lib.usecases.activity.TestActivityOnCreate">
+        <activity android:name=".lib.usecases.activity.TestActivityOnCreate" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -53,7 +53,7 @@
 
         <activity android:name=".lib.usecases.view.TestViewConstructorCache" />
 
-        <activity android:name=".lib.usecases.packagemanager.TestPackageManagerActivity">
+        <activity android:name=".lib.usecases.packagemanager.TestPackageManagerActivity" android:exported="true">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
                 <action android:name="com.tencent.test.implicit.intent" />
@@ -62,7 +62,7 @@
 
         <service android:name=".lib.usecases.service.TestService" />
 
-        <receiver android:name=".lib.usecases.receiver.MyReceiver">
+        <receiver android:name=".lib.usecases.receiver.MyReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="com.tencent.test.normal.action" />
             </intent-filter>

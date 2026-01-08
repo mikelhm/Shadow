@@ -39,6 +39,9 @@ android {
     aaptOptions {
         additionalParameters "--package-id", "0x7E", "--allow-reserved-package-id"
     }
+    buildFeatures {
+        buildConfig true
+    }
 }
 
 dependencies {
