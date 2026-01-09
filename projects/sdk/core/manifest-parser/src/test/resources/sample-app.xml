@@ -63,6 +63,9 @@
         <activity
             android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestForegroundService" />
 
+        <activity
+            android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestNotification" />
+
         <receiver
             android:name="com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.MyReceiver">
 

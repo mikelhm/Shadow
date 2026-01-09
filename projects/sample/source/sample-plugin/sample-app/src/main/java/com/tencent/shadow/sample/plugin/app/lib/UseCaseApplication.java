@@ -15,6 +15,7 @@ import com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityRe
 import com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivitySetTheme;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityWindowSoftMode;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestForegroundService;
+import com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestNotification;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.context.ActivityContextSubDirTestActivity;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.context.ApplicationContextSubDirTestActivity;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.dialog.TestDialogActivity;
@@ -104,5 +105,11 @@ public class UseCaseApplication extends Application {
                 new PluginUseHostClassActivity.Case(),
         });
         useCases.add(communicationCategory);
+
+        UseCaseCategory notificationCategory = new UseCaseCategory("通知测试", new UseCase[]{
+                new TestNotification.Case()
+        });
+        useCases.add(notificationCategory);
+
     }
 }
