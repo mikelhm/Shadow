@@ -7,7 +7,7 @@ includeBuild 'projects/sdk/coding'
 includeBuild 'projects/sdk/core'
 includeBuild 'projects/sdk/dynamic'
 
-//includeTest()
+includeTest()
 includeSample()
 //includeSampleDynamicApk()
 
