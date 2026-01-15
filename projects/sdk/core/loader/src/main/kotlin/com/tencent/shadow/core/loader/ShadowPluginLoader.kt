@@ -22,6 +22,7 @@ import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.os.Parcel
+import android.util.Log
 import com.tencent.shadow.core.common.InstalledApk
 import com.tencent.shadow.core.common.LoggerFactory
 import com.tencent.shadow.core.load_parameters.LoadParameters
@@ -144,6 +145,7 @@ abstract class ShadowPluginLoader(hostAppContext: Context) : DelegateProvider, D
         if (mLogger.isInfoEnabled) {
             mLogger.info("start loadPlugin")
         }
+        Log.d("ShadowPlugin", "start loadPlug")
         // 在这里初始化PluginServiceManager
         mPluginServiceManagerLock.withLock {
             if (!::mPluginServiceManager.isInitialized) {

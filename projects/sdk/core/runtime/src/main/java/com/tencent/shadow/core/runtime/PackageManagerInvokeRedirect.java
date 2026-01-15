@@ -48,6 +48,14 @@ public class PackageManagerInvokeRedirect {
         return getPluginPackageManager(classLoaderOfInvokeCode).getApplicationInfo(packageName, flags);
     }
 
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    public static ApplicationInfo getApplicationInfo(ClassLoader classLoaderOfInvokeCode, String packageName,
+                                                     PackageManager.ApplicationInfoFlags flags) throws PackageManager.NameNotFoundException {
+        long flagsValue = flags.getValue();
+        int intFlags = (int) flagsValue;
+        return getPluginPackageManager(classLoaderOfInvokeCode).getApplicationInfo(packageName, intFlags);
+    }
+
     public static ActivityInfo getActivityInfo(ClassLoader classLoaderOfInvokeCode, ComponentName component, int flags) throws PackageManager.NameNotFoundException {
         return getPluginPackageManager(classLoaderOfInvokeCode).getActivityInfo(component, flags);
     }
@@ -58,6 +66,12 @@ public class PackageManagerInvokeRedirect {
 
     public static ProviderInfo getProviderInfo(ClassLoader classLoaderOfInvokeCode, ComponentName component, int flags) throws PackageManager.NameNotFoundException {
         return getPluginPackageManager(classLoaderOfInvokeCode).getProviderInfo(component, flags);
+    }
+
+    @TargetApi(Build.VERSION_CODES.TIRAMISU)
+    public static ServiceInfo getServiceInfo(ClassLoader classLoaderOfInvokeCode, ComponentName component, PackageManager.ComponentInfoFlags flags ) throws PackageManager.NameNotFoundException {
+        int flagsValue = (int) flags.getValue();
+        return getPluginPackageManager(classLoaderOfInvokeCode).getServiceInfo(component, flagsValue);
     }
 
     public static PackageInfo getPackageInfo(ClassLoader classLoaderOfInvokeCode, String packageName, int flags) throws PackageManager.NameNotFoundException {
