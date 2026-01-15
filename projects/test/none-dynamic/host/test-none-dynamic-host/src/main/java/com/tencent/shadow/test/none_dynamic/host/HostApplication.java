@@ -23,11 +23,15 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.StrictMode;
+import android.util.Log;
 
 import com.tencent.shadow.core.common.InstalledApk;
 import com.tencent.shadow.core.common.LoggerFactory;
 import com.tencent.shadow.core.load_parameters.LoadParameters;
 import com.tencent.shadow.core.loader.ShadowPluginLoader;
+import com.tencent.shadow.core.manager.installplugin.AppCacheFolderManager;
+import com.tencent.shadow.core.manager.installplugin.CopySoBloc;
+import com.tencent.shadow.core.manager.installplugin.InstallPluginException;
 import com.tencent.shadow.core.runtime.container.ContentProviderDelegateProviderHolder;
 import com.tencent.shadow.core.runtime.container.DelegateProviderHolder;
 
@@ -56,6 +60,8 @@ public class HostApplication extends Application {
     private ShadowPluginLoader mPluginLoader;
 
     private final Map<String, InstalledApk> mPluginMap = new HashMap<>();
+
+    private NonDynamicPluginManager nonDynamicPluginManager;
 
     public void loadPlugin(final String partKey, final Runnable completeRunnable) {
         InstalledApk installedApk = mPluginMap.get(partKey);
@@ -96,6 +102,16 @@ public class HostApplication extends Application {
                     ShadowPluginLoader pluginLoader = mPluginLoader;
                     Future<?> future = null;
                     try {
+                        try {
+                            String filter = "lib/" + nonDynamicPluginManager.getAbi(new File(installedApk.apkFilePath)) + "/";
+                            File soDir = new File(installedApk.libraryPath);
+                            CopySoBloc.copySo(
+                                    new File(installedApk.apkFilePath),
+                                    soDir,
+                                    AppCacheFolderManager.getLibCopiedFile(soDir, partKey), filter);
+                        } catch (InstallPluginException e) {
+                           Log.d("ShadowPlugin", "extract so exception = " + e);
+                        }
                         future = pluginLoader.loadPlugin(plugin);
                         future.get(10, TimeUnit.SECONDS);
                     } catch (Exception e) {
@@ -129,6 +145,7 @@ public class HostApplication extends Application {
 
         InstalledApk installedApk = sPluginPrepareBloc.preparePlugin(this.getApplicationContext());
         mPluginMap.put(PART_MAIN, installedApk);
+        nonDynamicPluginManager = new NonDynamicPluginManager(this);
     }
 
     private static void detectNonSdkApiUsageOnAndroidP() {
