@@ -100,6 +100,8 @@
         <activity android:name=".lib.usecases.context.ContextGetPackageCodePathTestActivity" />
         <activity android:name=".lib.usecases.view.TestViewIdActivity" />
         <activity android:name=".lib.usecases.view.TestNullRefInXmlActivity" />
+        <activity
+            android:name="com.tencent.shadow.test.plugin.general_cases.lib.usecases.activity.TestActivityNativeLib" />
 
         <provider
             android:name=".lib.usecases.provider.TestProvider"
