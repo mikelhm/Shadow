@@ -31,6 +31,7 @@ import com.tencent.shadow.core.loader.ShadowPluginLoader;
 import com.tencent.shadow.core.runtime.container.ContentProviderDelegateProviderHolder;
 import com.tencent.shadow.core.runtime.container.DelegateProviderHolder;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.Future;
@@ -60,6 +61,12 @@ public class HostApplication extends Application {
         InstalledApk installedApk = mPluginMap.get(partKey);
         if (installedApk == null) {
             throw new NullPointerException("partKey == " + partKey);
+        }
+
+        File pluginFile = new File(installedApk.apkFilePath);
+        //fix crash:ava.util.concurrent.ExecutionException: java.util.concurrent.ExecutionException: java.lang.SecurityException: Writable dex file '/data/user/0/com.tencent.shadow.test.hostapp/files/plugin.apk' is not allowed
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.TIRAMISU) {
+            pluginFile.setWritable(false);
         }
 
         if (mPluginLoader.getPluginParts(partKey) == null) {
