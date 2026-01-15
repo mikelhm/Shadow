@@ -1,0 +1,1 @@
+/Users/luohaiming/Documents/Projects/Android/MikelProjectDemo/nativelib/build/intermediates/cxx/Debug/10v1g2k1/obj/arm64-v8a

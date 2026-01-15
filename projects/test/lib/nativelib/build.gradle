@@ -1,0 +1,59 @@
+plugins {
+    id 'com.android.library'
+}
+
+android {
+    namespace 'com.mikel.natvelib'
+    compileSdkVersion project.COMPILE_SDK_VERSION
+    defaultConfig {
+        minSdkVersion project.MIN_SDK_VERSION
+        targetSdkVersion project.TARGET_SDK_VERSION
+        versionCode project.VERSION_CODE
+        versionName project.VERSION_NAME
+        testInstrumentationRunner "com.tencent.shadow.test.none_dynamic.host.CustomAndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+        //1. android-defaultConfig {}下 externalNativeBuild  cmake path
+        externalNativeBuild {
+            cmake {
+                cppFlags ""
+                arguments "-DANDROID_STL=c++_shared"
+            }
+        }
+        //2. android-defaultConfig {}下 选择生成的CPU 架构，  android defaultConfig下定义
+        ndk{
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    //3. android{}下 externalNativeBuild  cmake path
+    externalNativeBuild {
+        cmake {
+            path "CMakeLists.txt"
+        }
+    }
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.google.android.material:material:1.3.0'
+    testImplementation 'junit:junit:4.+'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.2'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+}
