@@ -54,6 +54,9 @@ public class TestNotification extends Activity {
         findViewById(R.id.btn_test_custom_notification).setOnClickListener(view -> {
             NotificationHelper.showCustomNotification(this);
         });
+        findViewById(R.id.btn_test_system_notification).setOnClickListener(view -> {
+            NotificationHelper.showSystemNotification(this);
+        });
     }
 
     @Override

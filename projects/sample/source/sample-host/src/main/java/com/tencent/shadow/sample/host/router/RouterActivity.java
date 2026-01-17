@@ -27,7 +27,8 @@ public class RouterActivity extends Activity {
             return;
         }
         String action = intent.getAction();
-        if(("plugin.intent.action.NotificationAction").equals(action)) {
+        if(("plugin.intent.action.NotificationAction").equals(action) ||
+                "system.notification.click".equals(action)) {
            startPluginActivity(intent, "com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityOnCreate");
         }
     }

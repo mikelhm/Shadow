@@ -103,4 +103,36 @@ public class NotificationHelper {
             }
         }
     }
+
+    public static void showSystemNotification(Context context) {
+        // 创建通知渠道
+        createNotificationChannel(context);
+        // 创建点击意图
+        Intent intent = new Intent(context, HostResourceHelper.getPendingIntentActivity(TestActivityOnCreate.class));
+        intent.setAction("system.notification.click");
+        intent.putExtra("source", "system_notification");
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                addMutabilityFlags(PendingIntent.FLAG_UPDATE_CURRENT)
+        );
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
+                .setSmallIcon(HostResourceHelper.getNotificationSmallIcon())
+                .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), HostResourceHelper.getNotificationLargeIcon()))
+                .setContentTitle("系统通知")
+                .setContentText("任务正在处理中...")
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true)
+                .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                .setProgress(100, 80, false)
+                .setOngoing(true);
+
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            // 显示初始通知
+            notificationManager.notify(NOTIFICATION_ID + 1, builder.build());
+        }
+    }
 }
