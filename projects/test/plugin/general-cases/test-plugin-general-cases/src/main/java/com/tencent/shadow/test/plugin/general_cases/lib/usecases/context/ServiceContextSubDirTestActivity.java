@@ -23,8 +23,7 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
-import android.support.annotation.Nullable;
-
+import androidx.annotation.Nullable;
 import androidx.test.espresso.IdlingRegistry;
 
 import com.tencent.shadow.test.plugin.general_cases.lib.usecases.SimpleIdlingResource;
