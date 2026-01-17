@@ -4,6 +4,7 @@ import static com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseMana
 
 import android.app.Application;
 
+import com.sample.ads.AdsManager;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseManager;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCase;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCaseCategory;
@@ -35,6 +36,7 @@ public class UseCaseApplication extends Application {
     public void onCreate() {
         super.onCreate();
         initCase();
+        AdsManager.initAds(this);
     }
 
     private static void initCase() {

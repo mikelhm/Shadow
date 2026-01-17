@@ -61,7 +61,8 @@ def includeSample() {
             'slidingmenu',
             'sample-base-lib',
             'sample-base',
-            'sample-app'
+            'sample-app',
+            'ads'
     project(':sample-constant').projectDir = file('projects/sample/source/sample-constant')
     project(':sample-host').projectDir = file('projects/sample/source/sample-host')
     project(':sample-host-lib').projectDir = file('projects/sample/source/sample-host-lib')
@@ -73,6 +74,7 @@ def includeSample() {
     project(':sample-base-lib').projectDir = file('projects/sample/source/sample-plugin/sample-base-lib')
     project(':sample-base').projectDir = file('projects/sample/source/sample-plugin/sample-base')
     project(':sample-app').projectDir = file('projects/sample/source/sample-plugin/sample-app')
+    project(':ads').projectDir = file('projects/sample/source/sample-plugin/third-party/ads')
 }
 
 def includeSampleDynamicApk() {
