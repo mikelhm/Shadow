@@ -74,8 +74,33 @@ def createCopyTask(projectName, buildType, name, apkName) {
     }.dependsOn("${projectName}:assemblePlugin${buildType.capitalize()}")
 }
 
+// 创建复制任务
+def copyDebugTask = createCopyTask(':test-plugin-general-cases', 'debug', 'test-plugin-general-cases', 'plugin.apk')
+
+// 为 release 构建也创建任务
+def copyReleaseTask = createCopyTask(':test-plugin-general-cases', 'release', 'test-plugin-general-cases', 'plugin.apk')
+
 tasks.whenTaskAdded { task ->
-    if (task.name == "generateDebugAssets") {
-        task.dependsOn createCopyTask(':test-plugin-general-cases', 'debug', 'test-plugin-general-cases', 'plugin.apk')
+    // 处理所有 debug 相关任务
+    if (task.name.contains('Debug') &&
+            (task.name.contains('Assets') ||
+                    task.name.contains('Lint') ||
+                    task.name.contains('Resources') ||
+                    task.name == 'compileDebugSources')) {
+        task.dependsOn copyDebugTask
+    }
+
+    // 处理所有 release 相关任务
+    if (task.name.contains('Release') &&
+            (task.name.contains('Assets') ||
+                    task.name.contains('Lint') ||
+                    task.name.contains('Resources') ||
+                    task.name == 'compileReleaseSources')) {
+        task.dependsOn copyReleaseTask
+    }
+
+    // 处理通用的 lint 任务
+    if (task.name == 'lint') {
+        task.dependsOn copyDebugTask, copyReleaseTask
     }
 }
