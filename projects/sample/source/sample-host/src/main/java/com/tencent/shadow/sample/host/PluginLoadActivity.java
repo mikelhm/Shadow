@@ -21,6 +21,7 @@ package com.tencent.shadow.sample.host;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -51,6 +52,8 @@ public class PluginLoadActivity extends Activity {
         PluginHelper.getInstance().singlePool.execute(new Runnable() {
             @Override
             public void run() {
+                Log.d("ShadowPlugin", "开始加载插件");
+                long begin = System.currentTimeMillis();
                 HostApplication.getApp().loadPluginManager(PluginHelper.getInstance().pluginManagerFile);
 
                 Bundle bundle = new Bundle();
@@ -73,6 +76,8 @@ public class PluginLoadActivity extends Activity {
                             @Override
                             public void onCloseLoadingView() {
                                 finish();
+                                Log.d("ShadowPlugin", "加载插件 onCloseLoadingView " +
+                                        (System.currentTimeMillis() - begin) + "ms");
                             }
 
                             @Override
