@@ -21,5 +21,17 @@ public class HostResourceHelper {
     public static int getTextViewContentId() {
         return R.id.tv_content;
     }
+
+    public static int getBtnClickId() {
+        return R.id.btn_click;
+    }
+
+    public static Class<?> getPendingIntentActivity(Class<?> pluginClass) {
+        try {
+            return Class.forName("com.tencent.shadow.sample.host.router.RouterActivity");
+        } catch (Exception e) {
+            return pluginClass;
+        }
+    }
 }
 

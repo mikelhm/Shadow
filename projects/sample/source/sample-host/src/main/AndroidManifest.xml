@@ -22,6 +22,15 @@
             android:name=".plugin_view.HostAddPluginViewActivity"
             android:process=":plugin" />
 
+        <activity
+            android:name=".router.RouterActivity"
+            android:exported="true">
+            <intent-filter >
+                <action android:name="plugin.intent.action.NotificationAction" />
+            </intent-filter>
+        </activity>
+
+
         <provider
             android:authorities="${applicationId}.contentprovider.authority.dynamic"
             android:name="com.tencent.shadow.core.runtime.container.PluginContainerContentProvider"

@@ -3,19 +3,24 @@ package com.tencent.shadow.sample.plugin.app.lib.usecases.notification;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
 import android.widget.RemoteViews;
 
 import com.tencent.shadow.sample.host.lib.HostResourceHelper;
+import com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityOnCreate;
+import com.tencent.shadow.sample.plugin.app.lib.usecases.dialog.TestDialogActivity;
 
 public class NotificationHelper {
 
     private static final String CHANNEL_ID = "custom_notification_channel";
     private static final String CHANNEL_NAME = "自定义通知";
     private static final int NOTIFICATION_ID = 20001;
+    private static final String NOTIFICATION_ACTION = "plugin.intent.action.NotificationAction";
 
     public static void showCustomNotification(Context context) {
         // 创建通知渠道（Android 8.0+需要）
@@ -27,6 +32,8 @@ public class NotificationHelper {
         // 设置布局中的文本内容
         remoteViews.setTextViewText(HostResourceHelper.getTextViewTitleId(), "自定义通知Demo");
         remoteViews.setTextViewText(HostResourceHelper.getTextViewContentId(), "这是一个带按钮的自定义通知");
+
+        remoteViews.setOnClickPendingIntent(HostResourceHelper.getBtnClickId(), getPendingIntent(context));
 
         // 构建通知
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
@@ -71,6 +78,29 @@ public class NotificationHelper {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.cancel(NOTIFICATION_ID);
+        }
+    }
+
+    private static PendingIntent getPendingIntent(Context context) {
+        Intent intent = new Intent(context, HostResourceHelper.getPendingIntentActivity(TestActivityOnCreate.class));
+        intent.setAction(NOTIFICATION_ACTION);
+        return PendingIntent.getActivity(context, 0, intent, addMutabilityFlags(PendingIntent.FLAG_UPDATE_CURRENT));
+    }
+
+    private static int addMutabilityFlags(int flags) {
+        boolean isMutable = (flags & PendingIntent.FLAG_UPDATE_CURRENT) != 0;
+        if (isMutable) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                return flags | PendingIntent.FLAG_MUTABLE;
+            } else {
+                return flags;
+            }
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                return flags | PendingIntent.FLAG_IMMUTABLE;
+            } else {
+                return flags;
+            }
         }
     }
 }
