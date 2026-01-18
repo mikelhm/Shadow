@@ -22,7 +22,7 @@ import android.content.ContentUris;
 import android.net.Uri;
 import android.provider.BaseColumns;
 
-import com.tencent.shadow.sample.plugin.app.lib.BuildConfig;
+import com.tencent.shadow.sample.host.BuildConfig;
 
 
 public class TestProviderInfo {

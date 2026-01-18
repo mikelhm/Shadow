@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "936641351298",
+    "project_id": "shadowfork-d20f0",
+    "storage_bucket": "shadowfork-d20f0.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:936641351298:android:977b0c2304126601cbee9b",
+        "android_client_info": {
+          "package_name": "com.tencent.shadow.sample.host"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQi6WoujyCIT5uDRM0tE3T4bFi9NDrCnc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -22,7 +22,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.tencent.shadow.sample.plugin.app.lib.R;
+import com.tencent.shadow.sample.host.R;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCase;
 
 public class TestActivityReCreateBySystem extends Activity {

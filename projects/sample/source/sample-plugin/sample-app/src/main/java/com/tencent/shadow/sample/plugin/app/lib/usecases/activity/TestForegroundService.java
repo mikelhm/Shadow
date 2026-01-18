@@ -22,7 +22,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.tencent.shadow.sample.plugin.app.lib.R;
+import com.tencent.shadow.sample.host.R;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCase;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.util.ToastUtil;
 import com.tencent.shadow.sample.plugin.app.lib.usecases.service.PluginForegrounService;

@@ -27,7 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tencent.shadow.sample.plugin.app.lib.R;
+import com.tencent.shadow.sample.host.R;
 
 public class TestFragment extends Fragment {
 

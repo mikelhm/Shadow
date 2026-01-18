@@ -3,7 +3,12 @@ package com.tencent.shadow.sample.plugin.app.lib;
 import static com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseManager.useCases;
 
 import android.app.Application;
+import android.content.Context;
+import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseAppLifecycleListener;
+import com.google.firebase.FirebaseOptions;
 import com.sample.ads.AdsManager;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.UseCaseManager;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCase;
@@ -32,11 +37,14 @@ import com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.TestReceiverAc
 import com.tencent.shadow.sample.plugin.app.lib.usecases.webview.WebViewActivity;
 
 public class UseCaseApplication extends Application {
+
     @Override
     public void onCreate() {
         super.onCreate();
         initCase();
         AdsManager.initAds(this);
+        Log.d("ShadowPlugin", "firebase options = " +
+                FirebaseApp.getInstance().getOptions());
     }
 
     private static void initCase() {

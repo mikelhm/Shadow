@@ -21,7 +21,7 @@ package com.tencent.shadow.sample.plugin.app.lib.usecases.fragment;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import com.tencent.shadow.sample.plugin.app.lib.R;
+import com.tencent.shadow.sample.host.R;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.BaseActivity;
 import com.tencent.shadow.sample.plugin.app.lib.gallery.cases.entity.UseCase;
 

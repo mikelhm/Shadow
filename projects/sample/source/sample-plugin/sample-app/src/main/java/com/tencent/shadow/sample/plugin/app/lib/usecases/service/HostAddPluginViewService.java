@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.tencent.shadow.sample.host.lib.HostAddPluginViewContainer;
 import com.tencent.shadow.sample.host.lib.HostAddPluginViewContainerHolder;
-import com.tencent.shadow.sample.plugin.app.lib.R;
+import com.tencent.shadow.sample.host.R;
 
 public class HostAddPluginViewService extends IntentService {
     private final Handler uiHandler = new Handler(Looper.getMainLooper());

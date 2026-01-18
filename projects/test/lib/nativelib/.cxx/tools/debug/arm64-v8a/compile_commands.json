@@ -1,7 +1,7 @@
 [
 {
-  "directory": "/Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/.cxx/Debug/c5p6oyt6/arm64-v8a",
-  "command": "/Users/luohaiming/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android21 --sysroot=/Users/luohaiming/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dnative_test_EXPORTS -I/Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles/native_test.dir/src/main/cpp/native_test.cpp.o -c /Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/src/main/cpp/native_test.cpp",
+  "directory": "/Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/.cxx/Debug/5215266x/arm64-v8a",
+  "command": "/Users/luohaiming/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=aarch64-none-linux-android23 --sysroot=/Users/luohaiming/Library/Android/sdk/ndk/26.1.10909125/toolchains/llvm/prebuilt/darwin-x86_64/sysroot -Dnative_test_EXPORTS -I/Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/src/main/cpp/include -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security   -fno-limit-debug-info  -fPIC -o CMakeFiles/native_test.dir/src/main/cpp/native_test.cpp.o -c /Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/src/main/cpp/native_test.cpp",
   "file": "/Users/PokeStudio/AndroidProjects/ShadowFork/projects/test/lib/nativelib/src/main/cpp/native_test.cpp"
 }
 ]
