@@ -25,6 +25,7 @@ import android.os.Parcel;
 import android.os.StrictMode;
 import android.util.Log;
 
+import com.google.firebase.FirebaseApp;
 import com.tencent.shadow.core.common.InstalledApk;
 import com.tencent.shadow.core.common.LoggerFactory;
 import com.tencent.shadow.core.load_parameters.LoadParameters;
@@ -137,7 +138,7 @@ public class HostApplication extends Application {
     public void onCreate() {
         super.onCreate();
         sApp = this;
-
+        //Log.w("ShadowPlugin", "non dynamic Host application firebase options = " + FirebaseApp.getInstance().getOptions());
         ShadowPluginLoader loader = mPluginLoader = new TestPluginLoader(getApplicationContext());
         loader.onCreate();
         DelegateProviderHolder.setDelegateProvider(loader.getDelegateProviderKey(), loader);

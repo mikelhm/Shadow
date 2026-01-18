@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "325409943419",
+    "project_id": "shadownondyanmichost",
+    "storage_bucket": "shadownondyanmichost.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:325409943419:android:12aa6bbf3e2cfd414e17de",
+        "android_client_info": {
+          "package_name": "com.tencent.shadow.test.none_dynamic.host"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAN4k2l3Do3KusZgjEvVT1HOC1PyO_7Lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

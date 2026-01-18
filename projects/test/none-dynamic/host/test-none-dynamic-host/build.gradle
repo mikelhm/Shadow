@@ -1,4 +1,6 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
 
 android {
     namespace "com.tencent.shadow.test.none_dynamic.host"
@@ -54,6 +56,11 @@ dependencies {
     implementation project(':custom-view')
     implementation "androidx.test.espresso:espresso-idling-resource:$espresso_version"
     implementation project(':plugin-use-host-code-lib')
+
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-crashlytics")
+    implementation("com.google.firebase:firebase-crashlytics-ndk")
 }
 
 def createCopyTask(projectName, buildType, name, apkName) {

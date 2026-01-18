@@ -24,7 +24,7 @@ allprojects {
     }
 //    ext.ARTIFACT_VERSION = versionName + versionSuffix
     ext.ARTIFACT_VERSION = "20251210-SNAPSHOT"
-    ext.TEST_HOST_APP_APPLICATION_ID = 'com.tencent.shadow.test.hostapp'
+    ext.TEST_HOST_APP_APPLICATION_ID = 'com.tencent.shadow.test.none_dynamic.host'
     ext.SAMPLE_HOST_APP_APPLICATION_ID = 'com.tencent.shadow.sample.host'
     repositories {
         if (!System.getenv().containsKey("DISABLE_TENCENT_MAVEN_MIRROR")) {
