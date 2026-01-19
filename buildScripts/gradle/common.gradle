@@ -23,7 +23,7 @@ allprojects {
         versionSuffix = "-${gitShortRev()}-SNAPSHOT"
     }
 //    ext.ARTIFACT_VERSION = versionName + versionSuffix
-    ext.ARTIFACT_VERSION = "20260115-SNAPSHOT"
+    ext.ARTIFACT_VERSION = "20260119-SNAPSHOT"
     ext.TEST_HOST_APP_APPLICATION_ID = 'com.tencent.shadow.test.hostapp'
     ext.SAMPLE_HOST_APP_APPLICATION_ID = 'com.tencent.shadow.sample.host'
     repositories {

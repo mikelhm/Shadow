@@ -53,13 +53,16 @@ object LoadPluginBloc {
             Log.e("ShadowPlugin", "apkFilePath==null，无法加载插件")
             throw LoadPluginException("apkFilePath==null")
         } else {
-            Log.d("ShadowPlugin", "步骤1: 开始构建ClassLoader")
+            val startTime = System.currentTimeMillis()
+
             val buildClassLoader = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始执行ClassLoader构建任务")
                 lock.withLock {
                     try {
                         val result = LoadApkBloc.loadPlugin(installedApk, loadParameters, pluginPartsMap)
-                        Log.d("ShadowPlugin", "ClassLoader构建成功")
+                        val taskEndTime = System.currentTimeMillis()
+                        Log.d("ShadowPlugin", "ClassLoader构建成功，耗时: ${taskEndTime - taskStartTime}ms")
                         result
                     } catch (e: Exception) {
                         Log.e("ShadowPlugin", "ClassLoader构建失败", e)
@@ -69,14 +72,15 @@ object LoadPluginBloc {
             })
             Log.d("ShadowPlugin", "已提交ClassLoader构建任务，future = $buildClassLoader")
 
-            Log.d("ShadowPlugin", "步骤2: 开始构建PluginManifest")
             val buildPluginManifest = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始获取PluginManifest")
                 try {
                     val pluginClassLoader = buildClassLoader.get()
                     Log.d("ShadowPlugin", "获取到ClassLoader，开始加载PluginManifest")
                     val pluginManifest = pluginClassLoader.loadPluginManifest()
-                    Log.d("ShadowPlugin", "PluginManifest加载成功，包名: ${pluginManifest.applicationPackageName}")
+                    val taskEndTime = System.currentTimeMillis()
+                    Log.d("ShadowPlugin", "PluginManifest加载成功，包名: ${pluginManifest.applicationPackageName}，耗时: ${taskEndTime - taskStartTime}ms")
 
                     Log.d("ShadowPlugin", "开始检查包名")
                     CheckPackageNameBloc.check(pluginManifest, hostAppContext)
@@ -88,8 +92,8 @@ object LoadPluginBloc {
                 }
             })
 
-            Log.d("ShadowPlugin", "步骤3: 开始构建PluginApplicationInfo")
             val buildPluginApplicationInfo = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始构建PluginApplicationInfo")
                 try {
                     val pluginManifest = buildPluginManifest.get()
@@ -100,7 +104,8 @@ object LoadPluginBloc {
                         pluginManifest,
                         hostAppContext
                     )
-                    Log.d("ShadowPlugin", "PluginApplicationInfo创建成功")
+                    val taskEndTime = System.currentTimeMillis()
+                    Log.d("ShadowPlugin", "PluginApplicationInfo创建成功，耗时: ${taskEndTime - taskStartTime}ms")
                     pluginApplicationInfo
                 } catch (e: Exception) {
                     Log.e("ShadowPlugin", "PluginApplicationInfo构建失败", e)
@@ -108,8 +113,8 @@ object LoadPluginBloc {
                 }
             })
 
-            Log.d("ShadowPlugin", "步骤4: 开始构建PackageManager")
             val buildPackageManager = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始构建PluginPackageManager")
                 try {
                     val pluginApplicationInfo = buildPluginApplicationInfo.get()
@@ -121,7 +126,8 @@ object LoadPluginBloc {
                         componentManager,
                         hostPackageManager,
                     )
-                    Log.d("ShadowPlugin", "PluginPackageManager创建成功")
+                    val taskEndTime = System.currentTimeMillis()
+                    Log.d("ShadowPlugin", "PluginPackageManager创建成功，耗时: ${taskEndTime - taskStartTime}ms")
                     packageManager
                 } catch (e: Exception) {
                     Log.e("ShadowPlugin", "PackageManager构建失败", e)
@@ -129,12 +135,13 @@ object LoadPluginBloc {
                 }
             })
 
-            Log.d("ShadowPlugin", "步骤5: 开始构建Resources")
             val buildResources = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始创建Resources")
                 try {
                     val resources = CreateResourceBloc.create(installedApk.apkFilePath, hostAppContext)
-                    Log.d("ShadowPlugin", "Resources创建成功")
+                    val taskEndTime = System.currentTimeMillis()
+                    Log.d("ShadowPlugin", "Resources创建成功，耗时: ${taskEndTime - taskStartTime}ms")
                     resources
                 } catch (e: Exception) {
                     Log.e("ShadowPlugin", "Resources构建失败", e)
@@ -142,8 +149,8 @@ object LoadPluginBloc {
                 }
             })
 
-            Log.d("ShadowPlugin", "步骤6: 开始构建AppComponentFactory")
             val buildAppComponentFactory = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始构建AppComponentFactory")
                 try {
                     val pluginClassLoader = buildClassLoader.get()
@@ -155,11 +162,15 @@ object LoadPluginBloc {
                         Log.d("ShadowPlugin", "加载自定义AppComponentFactory: $appComponentFactory")
                         val clazz = pluginClassLoader.loadClass(appComponentFactory)
                         val factory = ShadowAppComponentFactory::class.java.cast(clazz.newInstance())
-                        Log.d("ShadowPlugin", "自定义AppComponentFactory实例化成功")
+                        val taskEndTime = System.currentTimeMillis()
+                        Log.d("ShadowPlugin", "自定义AppComponentFactory实例化成功，耗时: ${taskEndTime - taskStartTime}ms")
                         factory
                     } else {
                         Log.d("ShadowPlugin", "使用默认AppComponentFactory")
-                        ShadowAppComponentFactory()
+                        val factory = ShadowAppComponentFactory()
+                        val taskEndTime = System.currentTimeMillis()
+                        Log.d("ShadowPlugin", "默认AppComponentFactory创建成功，耗时: ${taskEndTime - taskStartTime}ms")
+                        factory
                     }
                 } catch (e: Exception) {
                     Log.e("ShadowPlugin", "AppComponentFactory构建失败", e)
@@ -167,8 +178,8 @@ object LoadPluginBloc {
                 }
             })
 
-            Log.d("ShadowPlugin", "步骤7: 开始构建Application")
             val buildApplication = executorService.submit(Callable {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始创建ShadowApplication")
                 try {
                     val pluginClassLoader = buildClassLoader.get()
@@ -188,7 +199,8 @@ object LoadPluginBloc {
                         pluginApplicationInfo,
                         appComponentFactory
                     )
-                    Log.d("ShadowPlugin", "ShadowApplication创建成功")
+                    val taskEndTime = System.currentTimeMillis()
+                    Log.d("ShadowPlugin", "ShadowApplication创建成功，耗时: ${taskEndTime - taskStartTime}ms")
                     application
                 } catch (e: Exception) {
                     Log.e("ShadowPlugin", "Application构建失败", e)
@@ -196,8 +208,8 @@ object LoadPluginBloc {
                 }
             })
 
-            Log.d("ShadowPlugin", "步骤8: 开始构建RunningPlugin")
             val buildRunningPlugin = executorService.submit {
+                val taskStartTime = System.currentTimeMillis()
                 Log.d("ShadowPlugin", "开始构建RunningPlugin")
                 try {
                     val pluginFile = File(installedApk.apkFilePath)
@@ -252,7 +264,9 @@ object LoadPluginBloc {
                         PluginPartInfoManager.addPluginInfo(pluginClassLoader, pluginPartInfo)
                         Log.d("ShadowPlugin", "已添加插件信息到PluginPartInfoManager")
 
-                        Log.i("ShadowPlugin", "插件加载完成: ${pluginManifest.applicationPackageName}, partKey: ${loadParameters.partKey}")
+                        val taskEndTime = System.currentTimeMillis()
+                        val totalTime = System.currentTimeMillis() - startTime
+                        Log.i("ShadowPlugin", "插件加载完成: ${pluginManifest.applicationPackageName}, partKey: ${loadParameters.partKey}, RunningPlugin构建耗时: ${taskEndTime - taskStartTime}ms, 总耗时: ${totalTime}ms")
                     }
                 } catch (e: Exception) {
                     Log.e("ShadowPlugin", "RunningPlugin构建失败", e)
