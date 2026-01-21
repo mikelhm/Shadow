@@ -18,6 +18,8 @@
 
 package com.tencent.shadow.core.loader.blocs
 
+import android.os.Build
+import android.util.Log
 import com.tencent.shadow.core.common.InstalledApk
 import com.tencent.shadow.core.common.Logger
 import com.tencent.shadow.core.load_parameters.LoadParameters
@@ -52,10 +54,20 @@ object LoadApkBloc {
         //Logger类一定打包在宿主中，所在的classLoader即为加载宿主的classLoader
         val hostClassLoader: ClassLoader = Logger::class.java.classLoader!!
         val hostParentClassLoader = hostClassLoader.parent
+        // 在 Android 5.0-6.0 上强制禁用 ODEX 优化
+        val finalOdexDir = when {
+            Build.VERSION.SDK_INT <= 23 -> {
+                Log.d("ShadowPlugin", "Android ${Build.VERSION.SDK_INT} 禁用 ODEX 优化")
+                null // 设置为 null 避免 ODEX 生成
+            }
+            else -> {
+                odexDir // 其他版本使用原配置
+            }
+        }
         if (dependsOn == null || dependsOn.isEmpty()) {
             return PluginClassLoader(
                 apk.absolutePath,
-                odexDir,
+                finalOdexDir,
                 installedApk.libraryPath,
                 hostClassLoader,
                 hostParentClassLoader,
@@ -69,7 +81,7 @@ object LoadApkBloc {
             } else {
                 return PluginClassLoader(
                     apk.absolutePath,
-                    odexDir,
+                    finalOdexDir,
                     installedApk.libraryPath,
                     pluginParts.classLoader,
                     null,
@@ -89,7 +101,7 @@ object LoadApkBloc {
                 CombineClassLoader(dependsOnClassLoaders, hostParentClassLoader)
             return PluginClassLoader(
                 apk.absolutePath,
-                odexDir,
+                finalOdexDir,
                 installedApk.libraryPath,
                 combineClassLoader,
                 null,
